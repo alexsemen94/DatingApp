@@ -24,8 +24,11 @@ namespace DatingApp.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<DataContext>(cfg => cfg.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-            services.AddCors();
+            services.AddCors(cfg =>
+            {
+                cfg.AddPolicy("AllowSpecificOrigin", builder => builder.WithOrigins("http://localhost:4200/", "http://localhost:5000/").AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod().AllowCredentials());
+            });
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);            
             services.AddScoped<IAuthRepository, AuthRepository>();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options => {
@@ -53,10 +56,7 @@ namespace DatingApp.API
             }
 
             //app.UseHttpsRedirection();
-            app.UseCors(cfg =>
-            {
-                cfg.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
-            });
+            app.UseCors("AllowSpecificOrigin");
             app.UseAuthentication();
             app.UseMvc();
         }

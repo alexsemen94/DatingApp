@@ -1,12 +1,14 @@
 ﻿using DatingApp.API.Data;
 using DatingApp.API.Dtos;
 using DatingApp.API.Modules;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace DatingApp.API.Controllers
@@ -24,6 +26,7 @@ namespace DatingApp.API.Controllers
         }
 
         [HttpPost("register")]
+        [EnableCors("AllowSpecificOrigin")]
         public async Task<IActionResult> Register(UserForRegisterDto userForRegisterDto)
         {
             userForRegisterDto.Username = userForRegisterDto.Username.ToLower();
@@ -42,9 +45,9 @@ namespace DatingApp.API.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login(UserForLoingDto userForLoingDto)
+        public async Task<IActionResult> Login(UserForLoingDto userForLoginDto)
         {
-            var userFromRepo = await _repo.Login(userForLoingDto.Username.ToLower(), userForLoingDto.Password);
+            var userFromRepo = await _repo.Login(userForLoginDto.Username, userForLoginDto.Password);
 
             if (userFromRepo == null)
                 return Unauthorized();
@@ -55,9 +58,10 @@ namespace DatingApp.API.Controllers
                 new Claim(ClaimTypes.Name, userFromRepo.Username)
             };
 
-            var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(_config.GetSection("AppSettings:Token").Value));
+            var key = new SymmetricSecurityKey(Encoding.UTF8
+                .GetBytes(_config.GetSection("AppSettings:Token").Value));
 
-            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256Signature);
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {
@@ -75,7 +79,5 @@ namespace DatingApp.API.Controllers
                 token = tokenHandler.WriteToken(token)
             });
         }
-
-
     }
 }
