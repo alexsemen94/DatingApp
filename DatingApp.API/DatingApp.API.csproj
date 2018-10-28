@@ -7,9 +7,13 @@
 
   <ItemGroup>
     <None Remove="ClientApp\src\app\routes.ts" />
+    <None Remove="ClientApp\src\app\_resolves\member-detail.resolver.ts" />
+    <None Remove="ClientApp\src\app\_resolves\member-edit.resolver.ts" />
+    <None Remove="ClientApp\src\app\_resolves\member-list.resolver.ts" />
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="ClientApp\src\app\_models\" />
     <Folder Include="ClientApp\src\app\_guards\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
@@ -26,6 +30,9 @@
 
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\src\app\routes.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\_resolves\member-edit.resolver.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\_resolves\member-list.resolver.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\_resolves\member-detail.resolver.ts" />
   </ItemGroup>
 
 </Project>
