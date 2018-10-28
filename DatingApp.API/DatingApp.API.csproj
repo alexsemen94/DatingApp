@@ -16,9 +16,11 @@
 
   <ItemGroup>
     <PackageReference Include="AngularJS.Core" Version="1.7.5" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="5.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Cors" Version="2.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.1" />
     <PackageReference Include="SkyWalking.Diagnostics.EntityFrameworkCore.Sqlite" Version="0.6.0" />
   </ItemGroup>
 
