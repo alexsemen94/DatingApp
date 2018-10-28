@@ -6,6 +6,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\src\app\routes.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ClientApp\src\app\_guards\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
 
@@ -15,6 +20,10 @@
     <PackageReference Include="Microsoft.AspNetCore.Cors" Version="2.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
     <PackageReference Include="SkyWalking.Diagnostics.EntityFrameworkCore.Sqlite" Version="0.6.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\app\routes.ts" />
   </ItemGroup>
 
 </Project>
