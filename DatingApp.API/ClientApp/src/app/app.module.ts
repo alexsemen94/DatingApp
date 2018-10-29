@@ -30,6 +30,7 @@ import { PreventUnsavedChanges } from './_guards/prevent-unsaved-changes.guard';
 import { MemberEditResolver } from './_guards/member-edit.resolver';
 import { PhotoEditComponent } from './members/photo-edit/photo-edit.component';
 import { FileUploadModule } from 'ng2-file-upload';
+import { ListResolver } from './_resolves/lists.resolver';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -80,7 +81,8 @@ export function tokenGetter() {
     MemberDetailResolver,
     MemberListResolver,
     MemberEditResolver,
-    PreventUnsavedChanges
+    PreventUnsavedChanges,
+    ListResolver
   ],
   bootstrap: [AppComponent]
 })
