@@ -27,7 +27,7 @@ export class PhotoEditComponent implements OnInit {
 
   fileOverBase(e: any): void {
     this.hasBaseDropZoneOver = e;
-  }   
+  }
 
   initializeUploader() {
     this.uploader = new FileUploader({
@@ -54,8 +54,13 @@ export class PhotoEditComponent implements OnInit {
         };
 
         this.photos.push(photo);
+        if (photo.isMain) {
+          this.authService.chagneMemberPhoto(photo.url);
+          this.authService.currentUser.photoUrl = photo.url;
+          localStorage.setItem('user', JSON.stringify(this.authService.currentUser));
+        }
       }
-    }
+    };
   }
 
   setMainPhoto(photo: Photo) {
