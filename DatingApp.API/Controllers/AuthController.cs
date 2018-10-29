@@ -45,6 +45,7 @@ namespace DatingApp.API.Controllers
         }
 
         [HttpPost("login")]
+        [EnableCors("AllowSpecificOrigin")]
         public async Task<IActionResult> Login(UserForLoingDto userForLoginDto)
         {
             var userFromRepo = await _repo.Login(userForLoginDto.Username, userForLoginDto.Password);

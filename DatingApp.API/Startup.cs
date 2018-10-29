@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Cors.Internal;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -29,10 +30,14 @@ namespace DatingApp.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<DataContext>(cfg => cfg.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddCors(cfg =>
+            services.AddCors(o => o.AddPolicy("AllowSpecificOrigin", builder =>
             {
-                cfg.AddPolicy("AllowSpecificOrigin", builder => builder.WithOrigins("http://localhost:4200/", "http://localhost:5000/").AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod().AllowCredentials());
-            });
+                builder.AllowAnyOrigin()
+                       .AllowAnyMethod()
+                       .AllowAnyHeader()
+                       .AllowCredentials();
+            }));
+            services.Configure<CloudinarySettings>(Configuration.GetSection("CloudinarySettings"));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
                 .AddJsonOptions(opt =>
                 {
